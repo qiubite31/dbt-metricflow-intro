@@ -1,0 +1,19 @@
+metrics:                    # List of metrics available for querying
+  - name: total_orders      # Unique metric name
+    label: Total Orders     # Human-readable display label
+    type: simple            # Basic metric directly based on a single measure
+    type_params:
+      measure: order_count  # Reference to the measure defined in semantic models
+
+  - name: total_revenue     # Unique metric name
+    label: Total Revenue    # Human-readable display label
+    type: simple            # Basic metric based on a measure
+    type_params:
+      measure: revenue      # Reference to the revenue measure
+
+  - name: average_order_value # Unique metric name
+    label: Average Order Value # Human-readable display label
+    type: ratio             # Calculated metric defined as a fraction of two metrics
+    type_params:
+      numerator: total_revenue   # Top part of the fraction
+      denominator: total_orders  # Bottom part of the fraction

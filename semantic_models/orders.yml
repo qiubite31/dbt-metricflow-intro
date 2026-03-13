@@ -1,0 +1,29 @@
+semantic_model:
+  name: orders              # Unique name for the semantic model
+  node_relation:            # Reference to the dbt model providing the data
+    alias: stg_orders       # Name of the model/table in the database
+    schema: main            # Database schema where the table resides
+
+  entities:                 # Definitions for identifying unique rows or join keys
+    - name: order           # Entity name
+      type: primary         # Identifies this as the primary unique key
+      expr: order_id        # Column name in the source model
+    - name: customer        # Entity name (foreign key)
+      type: foreign         # Identifies this as a link to another semantic model
+      expr: customer_id     # Column name used to join with the customers model
+
+  dimensions:               # Descriptive fields or time-based fields
+    - name: order_date      # Dimension name
+      type: time            # Data type: chronological/date field
+      type_params:
+        time_granularity: day # Smallest unit of time for this dimension
+    - name: status          # Dimension name
+      type: categorical     # Data type: discrete status values
+
+  measures:                 # Numeric aggregations (basis for metrics)
+    - name: order_count     # Measure name
+      expr: order_id        # Column or expression to aggregate
+      agg: count            # Aggregation type: counting unique instances
+    - name: revenue         # Measure name
+      expr: amount          # Column to aggregate (transaction amount)
+      agg: sum              # Aggregation type: totaling the values
