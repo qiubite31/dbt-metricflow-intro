@@ -1,21 +1,21 @@
-name: 'my_sqlite_project' # 專案名稱
-version: '1.0.0'           # 專案版本號
-config-version: 2          # dbt 的配置版本（建議使用 2）
+name: 'my_sqlite_project' # Project name
+version: '1.0.0'           # Project version
+config-version: 2          # dbt configuration version
 
-profile: 'my_sqlite_profile' # 在 profiles.yml 中對應的設定檔名稱
+profile: 'my_sqlite_profile' # profile name in profiles.yml
 
-model-paths: ["models"]      # 存放模型檔案（.sql）的目錄
-analysis-paths: ["analyses"] # 存放分析 SQL 的目錄
-test-paths: ["tests"]        # 存放測試檔案的目錄
-seed-paths: ["seeds"]        # 存放原始 CSV 資料的目錄
-macro-paths: ["macros"]      # 存放 dbt 宏（如 Jinja 函式）的目錄
-snapshot-paths: ["snapshots"] # 存放快照設定的目錄
+model-paths: ["models"]      # directory for model files (.sql)
+analysis-paths: ["analyses"] # directory for analysis SQL
+test-paths: ["tests"]        # directory for test files
+seed-paths: ["seeds"]        # directory for raw CSV data
+macro-paths: ["macros"]      # directory for dbt macros
+snapshot-paths: ["snapshots"] # directory for snapshot settings
 
-target-path: "target"  # 編譯後檔案與結果的預設儲存路徑
-clean-targets:         # 執行 'dbt clean' 時會刪除的目錄清單
-  - "target"           # 刪除編譯目錄
-  - "dbt_packages"     # 刪除已安裝的 dbt 套件目錄
+target-path: "target"  # path for compiled files
+clean-targets:         # directories to remove on 'dbt clean'
+  - "target"
+  - "dbt_packages"
 
-models:                     # 模型相關的層級配置
-  my_sqlite_project:        # 針對此專案名稱下的模型配置
-    materialized: view      # 預設的實體化方式（可選 view, table, incremental 等）
+models:                     # model-level configurations
+  my_sqlite_project:
+    materialized: view      # default materialization (view, table, incremental)

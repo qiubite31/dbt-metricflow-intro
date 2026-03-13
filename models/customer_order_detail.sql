@@ -1,4 +1,4 @@
-{{
+﻿{{
     config(
         materialized='table'
     )
@@ -20,7 +20,8 @@ final as (
         customers.last_name,
         customers.email,
         orders.order_date,
-        orders.status
+        orders.status,
+        orders.amount
     from orders
     inner join customers on orders.customer_id = customers.customer_id
 )

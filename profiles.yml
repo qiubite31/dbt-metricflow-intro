@@ -1,11 +1,11 @@
-﻿my_sqlite_profile: # 配置名稱，需與 dbt_project.yml 的 profile 欄位匹配
-  target: dev      # 預設使用的目標環境（開發環境）
-  outputs:         # 各個環境的連線資訊清單
-    dev:           # 開發環境 (dev) 的具體設定
-      type: sqlite # 指定資料庫類型為 SQLite
-      threads: 1   # 同時運行的線程數量（SQLite 通常建議為 1）
-      database: 'database' # 資料庫名稱標記（dbt 內部識別用）
-      schema: 'main'      # 預設使用的 Schema 名稱
-      schemas_and_paths:  # Schema 與資料庫檔案路徑的對應關係清單
-        main: 'data.db'   # 將 main schema 映射到當前目錄下的 data.db 檔案
-      schema_directory: '.' # 指定資料庫檔案（data.db）所在的基礎目錄
+my_sqlite_profile: # profile name, matches dbt_project.yml
+  target: dev      # default target environment
+  outputs:
+    dev:           # dev environment settings
+      type: sqlite # database type
+      threads: 1   # concurrent execution threads
+      database: 'database' # internal dbt database identifier
+      schema: 'main'      # default schema
+      schemas_and_paths:  
+        main: 'data.db'   # map main schema to data.db file
+      schema_directory: '.' # directory for data.db
