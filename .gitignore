@@ -73,7 +73,13 @@ docs/_build/
 
 # PyBuilder
 .pybuilder/
+
+# dbt
 target/
+logs/
+
+# data
+data.db
 
 # Jupyter Notebook
 .ipynb_checkpoints
