@@ -1,0 +1,44 @@
+﻿version: 2                           # dbt 綱要設定版本
+                                     #
+sources:                              # 定義資料來源
+  - name: my_sqlite_source           # 來源名稱，供 SQL 檔案中 {{ source() }} 函式引用
+    schema: main                     # 指定 SQLite 中的 schema 目錄（通常為 main）
+    tables:                          # 列出該來源包含的資料表
+      - name: raw_customers          # 原始客戶資料表名稱
+      - name: raw_orders             # 原始訂單資料表名稱
+                                     #
+models:                               # 定義並配置 dbt 模型
+  - name: stg_customers              # 客戶緩存層模型名稱
+    columns:                         # 配置欄位細節與測試
+      - name: customer_id            # 欄位名稱：客戶 ID
+        tests:                       # 定義測試規則
+          - unique                   # 確保該欄位值在表中是唯一的
+          - not_null                 # 確保該欄位不包含空值
+                                     #
+  - name: stg_orders                 # 訂單緩存層模型名稱
+    columns:                         # 配置欄位細節與測試
+      - name: order_id               # 欄位名稱：訂單 ID
+        tests:                       # 定義測試規則
+          - unique                   # 確保該欄位值在表中是唯一的
+          - not_null                 # 確保該欄位不包含空值
+      - name: status                 # 欄位名稱：訂單狀態
+        tests:                       # 定義測試規則
+          - accepted_values:         # 驗證數值是否在指定的清單內
+              values: ['placed', 'shipped', 'completed', 'return_pending', 'returned']
+                                     #
+  - name: customers_with_orders      # 客戶與訂單關聯的最終模型名稱
+    columns:                         # 配置欄位細節與測試
+      - name: customer_id            # 欄位名稱：客戶 ID
+        tests:                       # 定義測試規則
+          - unique                   # 確保最終表中的客戶 ID 唯一
+          - not_null                 # 確保客戶 ID 不為空
+                                     #
+  - name: customer_order_detail      # 客戶訂單詳細明細模型名稱
+    columns:                         # 配置欄位細節與測試
+      - name: order_id               # 欄位名稱：訂單 ID
+        tests:                       # 定義測試規則
+          - unique                   # 確保訂單 ID 唯一
+          - not_null                 # 確保不為空
+      - name: customer_id            # 欄位名稱：客戶 ID
+        tests:                       # 定義測試規則
+          - not_null                 # 確保客戶 ID 不為空
