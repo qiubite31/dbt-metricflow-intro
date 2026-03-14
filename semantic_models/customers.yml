@@ -1,18 +1,15 @@
-semantic_model:
-  name: customers           # Unique name for the semantic model
-  node_relation:            # Reference to the dbt model providing the data
-    alias: stg_customers    # Name of the model/table in the database
-    schema: main            # Database schema where the table resides
+semantic_models:
+  - name: customers
+    model: ref('stg_customers')
+    entities:
+      - name: customer
+        type: primary
+        expr: customer_id
+    dimensions:
+      - name: first_name
+        type: categorical
+      - name: last_name
+        type: categorical
+      - name: email
+        type: categorical
 
-  entities:                 # Definitions for identifying unique rows or join keys
-    - name: customer        # Entity name
-      type: primary         # Identifies this as the primary unique key
-      expr: customer_id     # Column name in the source model
-
-  dimensions:               # Categorical or descriptive fields for filtering/grouping
-    - name: first_name      # Dimension name
-      type: categorical     # Data type: discrete values
-    - name: last_name       # Dimension name
-      type: categorical     # Data type: discrete values
-    - name: email           # Dimension name
-      type: categorical     # Data type: discrete values

@@ -1,11 +1,8 @@
-my_sqlite_profile: # profile name, matches dbt_project.yml
-  target: dev      # default target environment
+my_duckdb_profile: # keeping original name to match dbt_project.yml
+  target: dev
   outputs:
-    dev:           # dev environment settings
-      type: sqlite # database type
-      threads: 1   # concurrent execution threads
-      database: 'database' # internal dbt database identifier
-      schema: 'main'      # default schema
-      schemas_and_paths:  
-        main: 'data.db'   # map main schema to data.db file
-      schema_directory: '.' # directory for data.db
+    dev:
+      type: duckdb
+      path: 'data.duckdb'
+      threads: 4
+

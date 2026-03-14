@@ -1,9 +1,9 @@
-﻿import sqlite3
+import duckdb
 import pandas as pd
 import os
 
 # Define database path
-db_path = 'data.db'
+db_path = os.path.abspath('data.duckdb')
 
 # Check if database exists and remove it to ensure a fresh start
 if os.path.exists(db_path):
@@ -14,8 +14,11 @@ if os.path.exists(db_path):
         print(f"Warning: Could not delete existing database: {e}")
 
 # Create connection
-conn = sqlite3.connect(db_path)
-cursor = conn.cursor()
+try:
+    conn = duckdb.connect(db_path)
+except Exception as e:
+    print(f"Connection failed: {e}")
+    exit(1)
 
 # Create sample data
 customers_data = {
@@ -59,11 +62,12 @@ orders_data = {
 df_customers = pd.DataFrame(customers_data)
 df_orders = pd.DataFrame(orders_data)
 
-# Write to SQLite
-df_customers.to_sql('raw_customers', conn, if_exists='replace', index=False)
-df_orders.to_sql('raw_orders', conn, if_exists='replace', index=False)
+# Write to DuckDB
+conn.execute("CREATE OR REPLACE TABLE raw_customers AS SELECT * FROM df_customers")
+conn.execute("CREATE OR REPLACE TABLE raw_orders AS SELECT * FROM df_orders")
 
 print(f"\nCreated {len(df_customers)} customers and {len(df_orders)} orders.")
 
 conn.close()
 print(f"Database updated at {os.path.abspath(db_path)}")
+

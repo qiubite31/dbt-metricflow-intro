@@ -1,10 +1,10 @@
-name: 'my_sqlite_project' # Project name
+name: 'my_duckdb_project' # Project name
 version: '1.0.0'           # Project version
 config-version: 2          # dbt configuration version
 
-profile: 'my_sqlite_profile' # profile name in profiles.yml
+profile: 'my_duckdb_profile' # profile name in profiles.yml
 
-model-paths: ["models"]      # directory for model files (.sql)
+model-paths: ["models", "semantic_models", "metrics"]      # directory for model files (.sql)
 analysis-paths: ["analyses"] # directory for analysis SQL
 test-paths: ["tests"]        # directory for test files
 seed-paths: ["seeds"]        # directory for raw CSV data
@@ -17,5 +17,5 @@ clean-targets:         # directories to remove on 'dbt clean'
   - "dbt_packages"
 
 models:                     # model-level configurations
-  my_sqlite_project:
+  my_duckdb_project:
     materialized: view      # default materialization (view, table, incremental)

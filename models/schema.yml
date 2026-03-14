@@ -1,12 +1,12 @@
 version: 2                           # dbt schema version
-                                     
+
 sources:                              # external data sources
-  - name: my_sqlite_source           # source name for {{ source() }}
-    schema: main                     # sqlite schema
+  - name: my_duckdb_source           # source name for {{ source() }}
+    schema: main                     # duckdb schema
     tables:                          # source tables
       - name: raw_customers          
       - name: raw_orders             
-                                     
+
 models:                               # dbt models
   - name: stg_customers              # staging model
     columns:                         # column configs and tests
@@ -14,7 +14,7 @@ models:                               # dbt models
         tests:                       
           - unique                   
           - not_null                 
-                                     
+
   - name: stg_orders                 
     columns:                         
       - name: order_id               
@@ -25,14 +25,14 @@ models:                               # dbt models
         tests:                       
           - accepted_values:         
               values: ['placed', 'shipped', 'completed', 'return_pending', 'returned']
-                                     
+
   - name: customers_with_orders      # joined model
     columns:                         
       - name: customer_id            
         tests:                       
           - unique                   
           - not_null                 
-                                     
+
   - name: customer_order_detail      # detailed model
     columns:                         
       - name: order_id               
