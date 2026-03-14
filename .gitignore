@@ -79,7 +79,8 @@ target/
 logs/
 
 # data
-data.db
+*.db
+*.duckdb
 
 # Jupyter Notebook
 .ipynb_checkpoints
